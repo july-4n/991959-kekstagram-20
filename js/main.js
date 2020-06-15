@@ -2,8 +2,8 @@
 
 var PHOTOS_NUMBERS = 25;
 var COMMENTS_VALUE = 3;
-var min_likes = 15;
-var max_likes = 200;
+var minLikes = 15;
+var maxLikes = 200;
 var MIN_AVATAR_NUMBER = 6;
 var MAX_AVATAR_NUMBER = 6;
 var MESSAGES = [
@@ -28,7 +28,7 @@ var getRandomElement = function (elements) {
 // получение случайного числа из интервала
 
 var getRandomIntFromInterval = function (min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min)
+  return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
 // получаем массив с фотографиями
@@ -40,13 +40,13 @@ var getPhotosArray = function () {
     var picture = {
       url: 'photos/' + i + '.jpg',
       description: getRandomElement(DESCRIPTION),
-      likes: getRandomIntFromInterval(min_likes, max_likes)
+      likes: getRandomIntFromInterval(minLikes, maxLikes)
     };
 
     var renderComments = function (commentsNumber) {
       var comments = [];
 
-      for (var i = 0; i < commentsNumber; i++) {
+      for (var j = 0; j < commentsNumber; j++) {
         var comment = {
           avatar: 'img/avatar-0' + getRandomIntFromInterval(MIN_AVATAR_NUMBER, MAX_AVATAR_NUMBER) + '.svg',
           message: getRandomElement(MESSAGES),
@@ -59,28 +59,28 @@ var getPhotosArray = function () {
 
     var photo = {
       picture: picture,
-      comment: renderComments(getRandomIntFromInterval(0, 3))
-    }
+      comment: renderComments(getRandomIntFromInterval(0, COMMENTS_VALUE))
+    };
     photos.push(photo);
   }
   return photos;
-}
+};
 
 // находим элемент куда будем вставлять
 
 var similarPhotoList = document.querySelector('.pictures');
 
-var similarPhotosTemplate = document.querySelector('#picture').content.querySelector('.picture')
+var similarPhotosTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
 // рендерим фото, описание, комментарии, лайки
 
 var photoElement = function (photo) {
   var element = similarPhotosTemplate.cloneNode(true);
 
-    element.querySelector('.picture__img').src = photo.picture.url;
-    element.querySelector('.picture__img').alt = photo.picture.description;
-    element.querySelector('.picture__comments').textContent = photo.comment.length;
-    element.querySelector('.picture__likes').textContent = photo.picture.likes;
+  element.querySelector('.picture__img').src = photo.picture.url;
+  element.querySelector('.picture__img').alt = photo.picture.description;
+  element.querySelector('.picture__comments').textContent = photo.comment.length;
+  element.querySelector('.picture__likes').textContent = photo.picture.likes;
 
   return element;
 };
